@@ -1,0 +1,30 @@
+.PostForm {
+    width: 80%;
+    border: 1px solid rgb(197, 199, 223);
+    box-shadow: 0 2px 3px rgb(215, 214, 224);
+    text-align: center;
+    margin: 0px auto;
+}
+
+.PostForm label {
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.PostForm input,
+.PostForm textarea {
+    display: block;
+    width: 80%;
+    box-sizing: border-box;
+    border: 1px solid gray;
+    outline: none;
+    font: inherit;
+    margin: auto;
+}
+
+.PostForm button {
+    margin: 15px 0;
+    font: inherit;
+    cursor: pointer;
+}
