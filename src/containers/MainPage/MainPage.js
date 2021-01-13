@@ -11,59 +11,41 @@ class MainPage extends Component {
     }
 
     componentDidMount() {
-        axios.get('https://my-todo-list-15256-default-rtdb.firebaseio.com/posts.json').then(response => {
-            if (response.status === 200) {
-                if (response.data) {
-                    const postsReceived = Object.keys(response.data).map(key => ({
-                        ...response.data[key],
-                        id: key,
-                    }));
+        axios.get('/posts.json').then(response => {
+            if (response.data) {
+                const postsReceived = Object.keys(response.data).map(key => ({
+                    ...response.data[key],
+                    id: key,
+                }));
 
-                    this.setState({
-                        posts: postsReceived
-                    })
-                }
-            } else {
-                alert('Ops!!! Something wrong happened\n\n Server status: ' + response.status);
+                this.setState({
+                    posts: postsReceived
+                })
             }
-        }).catch(error => {
-            alert('Ops!!! Something wrong happened\n\n' + error);
         });
     }
 
     onSavePost = (post) => {
-        axios.post('https://my-todo-list-15256-default-rtdb.firebaseio.com/posts.json', post).then(response => {
-            if (response.status === 200) {
-                const newPost = {
-                    ...post,
-                    id: response.data.name
-                };
+        axios.post('/posts.json', post).then(response => {
+            const newPost = {
+                ...post,
+                id: response.data.name
+            };
 
-                this.setState((currentState) => ({
-                    posts: [
-                        ...currentState.posts,
-                        newPost,
-                    ]
-                }));
-            } else {
-                alert('Ops!!! Something wrong happened\n\n Server status: ' + response.status);
-            }
-        }).catch(error => {
-            alert('Ops!!! Something wrong happened\n\n' + error);
+            this.setState((currentState) => ({
+                posts: [
+                    ...currentState.posts,
+                    newPost,
+                ]
+            }));
         });
     }
 
     onDelete = (id) => {
-        axios.delete('https://my-todo-list-15256-default-rtdb.firebaseio.com/posts/' + id + '.json').then(response => {
-            if (response.status === 200) {
-                this.setState({
-                    posts: this.state.posts.filter(post => post.id !== id),
-                });
-            } else {
-                alert('Ops!!! Something wrong happened\n\n Server status: ' + response.status);
-            }
-        }).catch(error => {
-            alert('Ops!!! Something wrong happened\n\n' + error);
+        axios.delete('/posts/' + id + '.json').then(response => {
+            this.setState({
+                posts: this.state.posts.filter(post => post.id !== id),
+            });
         });
     }
 
