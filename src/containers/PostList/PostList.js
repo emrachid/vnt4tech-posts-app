@@ -1,25 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Post from '../../components/Post/Post';
 
 import './PostList.css';
 
-class PostList extends Component {
+const PostList = (props) => {
 
-    deletePostHandler = (id) => {
-        this.props.onDelete(id)
+    const deletePostHandler = (id) => {
+        props.onDelete(id)
     }
     
-    render() {
-        const posts = this.props.posts.map(post => (
-            <Post key={post.id} data={post} onClick={this.deletePostHandler}/>
-        ));
+    const posts = props.posts.map(post => (
+        <Post key={post.id} data={post} onClick={deletePostHandler}/>
+    ));
 
-        return (
-            <div className="PostList">
-                {posts}
-            </div>
-        );
-    }
+    return (
+        <div className="PostList">
+            {posts}
+        </div>
+    );
 };
 
 export default PostList;

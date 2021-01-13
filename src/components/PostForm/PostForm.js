@@ -1,39 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import './PostForm.css';
 
-class PostForm extends Component {
-    state = {
+const PostForm = (props) => {
+    const [state, setState] = useState({
         title: '',
         content: '',
-    };
+    });
 
-    resetInput = () => {
-        this.setState({
+    const resetInput = () => {
+        setState({
             title: '',
             content: '',
         });
     }
 
-    savePostHandler = () => {
-        this.props.onSavePost({
-            ...this.state,
+    const savePostHandler = () => {
+        props.onSavePost({
+            ...state,
         });
 
-        this.resetInput();
+        resetInput();
     }
 
-    render() {
-        return (
-            <div className="PostForm">
-                <label>Title</label>
-                <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
-                <label>Content</label>
-                <textarea rows="4" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
-                <button onClick={this.savePostHandler}>Save</button>
-            </div>
-        );
-    }
+    return (
+        <div className="PostForm">
+            <label>Title</label>
+            <input type="text" value={state.title} onChange={(event) => setState({...state, title: event.target.value})} />
+            <label>Content</label>
+            <textarea rows="4" value={state.content} onChange={(event) => setState({...state, content: event.target.value})} />
+            <button onClick={savePostHandler}>Save</button>
+        </div>
+    );
 }
 
 export default PostForm;

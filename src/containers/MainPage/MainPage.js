@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import PostList from '../PostList/PostList'
 import PostForm from '../../components/PostForm/PostForm'
 
 import './MainPage.css';
 
-class MainPage extends Component {
-    state = {
+const MainPage = () => {
+    const [state, setState] = useState({
         posts: [],
-    }
+    });
 
-    componentDidMount() {
+    useEffect(() => {
         axios.get('/posts.json').then(response => {
             if (response.data) {
                 const postsReceived = Object.keys(response.data).map(key => ({
@@ -18,21 +18,21 @@ class MainPage extends Component {
                     id: key,
                 }));
 
-                this.setState({
+                setState({
                     posts: postsReceived
                 })
             }
         });
-    }
+    }, []);
 
-    onSavePost = (post) => {
+    const onSavePost = (post) => {
         axios.post('/posts.json', post).then(response => {
             const newPost = {
                 ...post,
                 id: response.data.name
             };
 
-            this.setState((currentState) => ({
+            setState((currentState) => ({
                 posts: [
                     ...currentState.posts,
                     newPost,
@@ -41,26 +41,24 @@ class MainPage extends Component {
         });
     }
 
-    onDelete = (id) => {
+    const onDelete = (id) => {
         axios.delete('/posts/' + id + '.json').then(response => {
-            this.setState({
-                posts: this.state.posts.filter(post => post.id !== id),
+            setState({
+                posts: state.posts.filter(post => post.id !== id),
             });
         });
     }
 
-    render() {
-        return (
+    return (
         <div className="MainPage">
             <section>
-                <PostForm onSavePost={this.onSavePost} />
+                <PostForm onSavePost={onSavePost} />
             </section>
             <section>
-                <PostList posts={this.state.posts} onDelete={this.onDelete}/>
+                <PostList posts={state.posts} onDelete={onDelete}/>
             </section>
         </div>
-        );
-    }
+    );
 }
 
 export default MainPage;
