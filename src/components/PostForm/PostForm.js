@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uniqid from 'uniqid';
 
 import './PostForm.css';
 
@@ -12,10 +13,16 @@ class PostForm extends Component {
         this.setState({
             title: '',
             content: '',
-        })
+        });
     }
 
     savePostHandler = () => {
+        this.props.onSavePost({
+            ...this.state,
+            id: uniqid()
+        });
+
+        this.resetInput();
     }
 
     render() {
