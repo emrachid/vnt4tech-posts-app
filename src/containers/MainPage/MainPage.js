@@ -10,11 +10,18 @@ class MainPage extends Component {
     }
 
     onSavePost = (post) => {
-        // TODO: Add new post into component state. Tip: use "this.setState()".
+        this.setState((currentState) => ({
+            posts: [
+                ...currentState.posts,
+                post
+            ]
+        }));
     }
 
     onDelete = (id) => {
-        // TODO: Delete post from component state. Tip: use "this.setState()".
+        this.setState({
+            posts: this.state.posts.filter(post => post.id !== id)
+        });
     }
 
     render() {
