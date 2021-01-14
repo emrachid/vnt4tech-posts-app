@@ -1,0 +1,13 @@
+.Post {
+    padding: 0px 16px 16px;
+    border: 1px solid rgb(197, 199, 223);
+    box-shadow: 0 2px 3px rgb(215, 214, 224);
+    margin: 10px;
+    word-wrap: break-word;
+}
+
+.Post button {
+    margin-top: 20px;
+    font: inherit;
+    cursor: pointer;
+}
