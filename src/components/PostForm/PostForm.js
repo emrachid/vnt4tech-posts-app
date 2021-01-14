@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import axios from "axios";
+import * as actionType from '../../store/actions';
 
 import './PostForm.css';
 
-const PostForm = (props) => {
+const PostForm = () => {
+    const dispacth = useDispatch();
+
     const [state, setState] = useState({
         title: '',
         content: '',
@@ -16,11 +21,22 @@ const PostForm = (props) => {
     }
 
     const savePostHandler = () => {
-        props.onSavePost({
+        onSavePost({
             ...state,
         });
 
         resetInput();
+    }
+
+    const onSavePost = (post) => {
+        axios.post('/posts.json', post).then(response => {
+            const newPost = {
+                ...post,
+                id: response.data.name
+            };
+
+            dispacth({type: actionType.CREATE_POST, post: newPost});
+        });
     }
 
     return (
